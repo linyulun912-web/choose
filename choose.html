@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖靈測試：讀者選擇</title>
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 使用思源黑體或系統預設的中文字體 */
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f7f7f7;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8 flex items-center justify-center min-h-screen">
+    <div class="max-w-xl mx-auto bg-white p-6 sm:p-10 rounded-xl shadow-2xl border border-gray-100 text-center">
+
+        <!-- 選擇標題與提示 -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">圖靈測試：做出你的選擇！</h1>
+        
+        <p class="text-xl font-medium text-red-600 mt-4 mb-8">請選擇哪一扇門後面是機器人。</p>
+
+        <!-- Choice Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+            <button id="choiceA" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200 shadow-lg transform hover:scale-105">
+                第一扇門
+            </button>
+            <button id="choiceB" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200 shadow-lg transform hover:scale-105">
+                第二扇門
+            </button>
+        </div>
+
+        <!-- Result Display -->
+        <div id="result" class="mt-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded-lg text-center text-xl font-bold hidden">
+            <!-- 選擇結果會顯示於此 -->
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const choiceA = document.getElementById('choiceA');
+            const choiceB = document.getElementById('choiceB');
+            const resultDiv = document.getElementById('result');
+
+            // Helper function to update the result display
+            function showResult(message, isCorrect) {
+                resultDiv.textContent = message;
+                // 移除所有舊的背景和邊框顏色類別
+                resultDiv.classList.remove('hidden', 'bg-red-100', 'border-red-500', 'text-red-800', 'bg-green-100', 'border-green-500', 'text-green-800', 'bg-yellow-100', 'border-yellow-500', 'text-yellow-800');
+                
+                // 邏輯: 答案是第二扇門是機器人 (正確路徑)
+                if (isCorrect) {
+                    // Correct Choice (跳轉到 Page 9), 使用綠色提示正確
+                    resultDiv.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+                } else {
+                    // Incorrect Choice (跳轉到 Page 8), 使用紅色提示錯誤
+                    resultDiv.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                }
+            }
+
+            // 按鈕 A: 讀者猜測第一扇門是機器人 (錯誤路徑) -> Page 8
+            choiceA.addEventListener('click', () => {
+                showResult('你的選擇是：第一扇門是機器人。請翻到第八頁', false);
+            });
+
+            // 按鈕 B: 讀者猜測第二扇門是機器人 (正確路徑) -> Page 9
+            choiceB.addEventListener('click', () => {
+                showResult('你的選擇是：第二扇門是機器人。請翻到第九頁', true);
+            });
+        });
+    </script>
+</body>
+</html>
